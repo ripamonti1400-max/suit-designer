@@ -1,91 +1,430 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Luxury Suit Designer 3D</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Luxury 3D Bespoke Suit Designer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@600&family=Cinzel:wght@500&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
 body{
-  background:#111;
-  overflow:hidden;
-  color:white;
+overflow:hidden;
+background:white;
+color:#111;
 }
 
 #app{
-  display:flex;
-  height:100vh;
+display:flex;
+height:100vh;
 }
 
-#controls{
-  width:360px;
-  overflow-y:auto;
-  background:#1b1b1b;
-  padding:25px;
-  border-right:1px solid #333;
+#sidebar{
+width:420px;
+overflow-y:auto;
+padding:30px;
+background:#fafafa;
+border-right:1px solid #ddd;
+box-shadow:10px 0 30px rgba(0,0,0,0.05);
+z-index:10;
 }
 
-#controls h1{
-  margin-bottom:20px;
-  font-size:30px;
+#sidebar h1{
+font-size:42px;
+font-family:'Playfair Display',serif;
+margin-bottom:10px;
 }
 
-.group{
-  margin-bottom:22px;
+.subtitle{
+font-size:13px;
+letter-spacing:2px;
+text-transform:uppercase;
+opacity:0.5;
+margin-bottom:30px;
 }
 
-.group h2{
-  margin-bottom:10px;
-  font-size:16px;
-  color:#f5d27d;
+.section{
+margin-bottom:28px;
+}
+
+.section h2{
+font-size:13px;
+letter-spacing:2px;
+text-transform:uppercase;
+margin-bottom:12px;
+color:#8a6b3e;
+}
+
+.colors{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.color{
+width:36px;
+height:36px;
+border-radius:50%;
+cursor:pointer;
+border:2px solid white;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+transition:0.2s;
+}
+
+.color:hover{
+transform:scale(1.1);
 }
 
 select,
 input{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#2b2b2b;
-  color:white;
-}
-
-.colors{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-.color{
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  cursor:pointer;
-  border:2px solid white;
-}
-
-#viewer{
-  flex:1;
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+background:white;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+font-size:14px;
 }
 
 button{
-  width:100%;
-  padding:15px;
-  border:none;
-  border-radius:12px;
-  background:#f5d27d;
-  color:black;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
+width:100%;
+padding:16px;
+border:none;
+border-radius:16px;
+background:#111;
+color:white;
+font-weight:700;
+cursor:pointer;
+margin-top:25px;
 }
+
+#viewer{
+flex:1;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+perspective:2500px;
+background:
+radial-gradient(circle at center,#ffffff 0%,#f1eee9 100%);
+overflow:hidden;
+}
+
+#avatar{
+position:relative;
+width:320px;
+height:780px;
+transform-style:preserve-3d;
+transition:transform 0.05s linear;
+}
+
+.shadow{
+position:absolute;
+bottom:-30px;
+left:40px;
+width:240px;
+height:40px;
+background:rgba(0,0,0,0.15);
+border-radius:50%;
+filter:blur(20px);
+}
+
+.head{
+position:absolute;
+width:110px;
+height:135px;
+background:linear-gradient(135deg,#f6cfaa,#e7b78d);
+border-radius:55px;
+left:105px;
+top:0;
+transform:translateZ(45px);
+box-shadow:
+inset -10px -10px rgba(0,0,0,0.06),
+0 12px 20px rgba(0,0,0,0.1);
+z-index:10;
+}
+
+.hair{
+position:absolute;
+width:118px;
+height:58px;
+background:linear-gradient(180deg,#222,#111);
+left:101px;
+top:-6px;
+border-radius:60px 60px 25px 25px;
+transform:translateZ(60px);
+z-index:12;
+}
+
+.neck{
+position:absolute;
+width:40px;
+height:45px;
+background:#efc29a;
+left:140px;
+top:118px;
+transform:translateZ(30px);
+}
+
+.shirt{
+position:absolute;
+width:130px;
+height:250px;
+background:white;
+left:95px;
+top:160px;
+border-radius:18px;
+transform:translateZ(15px);
+box-shadow:
+inset -10px -10px rgba(0,0,0,0.03);
+z-index:2;
+}
+
+.shirtCollarLeft,
+.shirtCollarRight{
+position:absolute;
+width:34px;
+height:65px;
+background:white;
+top:0;
+}
+
+.shirtCollarLeft{
+left:22px;
+clip-path:polygon(0 0,100% 0,0 100%);
+}
+
+.shirtCollarRight{
+right:22px;
+clip-path:polygon(100% 0,100% 100%,0 0);
+}
+
+.tie{
+position:absolute;
+width:28px;
+height:170px;
+background:linear-gradient(180deg,#111,#444);
+left:146px;
+top:190px;
+clip-path:polygon(50% 0%,100% 12%,70% 100%,30% 100%,0 12%);
+transform:translateZ(45px);
+z-index:5;
+}
+
+.blazer{
+position:absolute;
+width:230px;
+height:320px;
+background:linear-gradient(145deg,#1f2a44,#141d30);
+left:45px;
+top:145px;
+border-radius:28px;
+transform:translateZ(35px);
+box-shadow:
+0 30px 40px rgba(0,0,0,0.18),
+inset -14px -14px rgba(0,0,0,0.12);
+z-index:4;
+}
+
+.lapelLeft,
+.lapelRight{
+position:absolute;
+width:70px;
+height:175px;
+background:linear-gradient(180deg,#0f1725,#1a2539);
+top:0;
+}
+
+.lapelLeft{
+left:24px;
+clip-path:polygon(0 0,100% 0,0 100%);
+}
+
+.lapelRight{
+right:24px;
+clip-path:polygon(100% 0,100% 100%,0 0);
+}
+
+.armLeft,
+.armRight{
+position:absolute;
+width:58px;
+height:240px;
+background:linear-gradient(145deg,#1f2a44,#141d30);
+top:180px;
+border-radius:28px;
+transform:translateZ(12px);
+box-shadow:
+0 20px 20px rgba(0,0,0,0.15),
+inset -8px -8px rgba(0,0,0,0.08);
+}
+
+.armLeft{
+left:0;
+transform:
+rotateZ(8deg)
+translateZ(20px);
+}
+
+.armRight{
+right:0;
+transform:
+rotateZ(-8deg)
+translateZ(20px);
+}
+
+.cuffLeft,
+.cuffRight{
+position:absolute;
+width:60px;
+height:25px;
+background:white;
+bottom:0;
+border-radius:8px;
+}
+
+.elbowLeft,
+.elbowRight{
+position:absolute;
+width:40px;
+height:25px;
+background:#5b3a1f;
+border-radius:20px;
+top:110px;
+left:9px;
+opacity:0;
+}
+
+.handLeft,
+.handRight{
+position:absolute;
+width:40px;
+height:40px;
+background:#efc29a;
+border-radius:50%;
+top:402px;
+}
+
+.handLeft{
+left:5px;
+}
+
+.handRight{
+right:5px;
+}
+
+.buttons{
+position:absolute;
+left:108px;
+top:70px;
+}
+
+.btn{
+width:13px;
+height:13px;
+background:gold;
+border-radius:50%;
+margin-bottom:18px;
+box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+.pocketSquare{
+position:absolute;
+width:24px;
+height:20px;
+background:red;
+right:30px;
+top:70px;
+border-radius:3px;
+}
+
+.embroidery{
+position:absolute;
+left:28px;
+top:70px;
+font-size:14px;
+font-weight:700;
+color:white;
+}
+
+.blazerPocketLeft,
+.blazerPocketRight{
+position:absolute;
+width:50px;
+height:10px;
+border-radius:10px;
+background:rgba(255,255,255,0.15);
+bottom:50px;
+}
+
+.blazerPocketLeft{
+left:25px;
+}
+
+.blazerPocketRight{
+right:25px;
+}
+
+.pants{
+position:absolute;
+width:150px;
+height:320px;
+left:85px;
+top:445px;
+transform:translateZ(15px);
+}
+
+.legLeft,
+.legRight{
+position:absolute;
+width:65px;
+height:300px;
+background:linear-gradient(145deg,#2b2b2b,#1c1c1c);
+border-radius:14px;
+box-shadow:
+0 15px 20px rgba(0,0,0,0.1),
+inset -6px -6px rgba(255,255,255,0.02);
+}
+
+.legRight{
+right:0;
+}
+
+.shoeLeft,
+.shoeRight{
+position:absolute;
+width:75px;
+height:28px;
+background:black;
+border-radius:16px;
+bottom:-10px;
+}
+
+.shoeRight{
+right:-5px;
+}
+
+.priceTag{
+position:absolute;
+top:35px;
+right:35px;
+padding:20px 24px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+font-size:30px;
+font-weight:700;
+}
+
 </style>
 </head>
 
@@ -93,84 +432,84 @@ button{
 
 <div id="app">
 
-<div id="controls">
+<div id="sidebar">
 
-<h1>Luxury Suit Designer</h1>
+<h1>BESPOKE.</h1>
+<div class="subtitle">Luxury 3D Suit Configurator</div>
 
-<div class="group">
-<h2>Blazer Color</h2>
-<div class="colors blazerColors">
-<div class="color" data-type="blazer" data-color="#1f2a44" style="background:#1f2a44"></div>
-<div class="color" data-type="blazer" data-color="#000000" style="background:#000000"></div>
-<div class="color" data-type="blazer" data-color="#4b4b4b" style="background:#4b4b4b"></div>
-<div class="color" data-type="blazer" data-color="#8b4513" style="background:#8b4513"></div>
-<div class="color" data-type="blazer" data-color="#355c4b" style="background:#355c4b"></div>
-</div>
-</div>
-
-<div class="group">
-<h2>Pant Color</h2>
-<div class="colors pantColors">
-<div class="color" data-type="pants" data-color="#1f2a44" style="background:#1f2a44"></div>
-<div class="color" data-type="pants" data-color="#000000" style="background:#000000"></div>
-<div class="color" data-type="pants" data-color="#777" style="background:#777"></div>
-<div class="color" data-type="pants" data-color="#3a3a3a" style="background:#3a3a3a"></div>
+<div class="section">
+<h2>Blazer Colour</h2>
+<div class="colors">
+<div class="color" data-target="blazer" data-color="#1f2a44" style="background:#1f2a44"></div>
+<div class="color" data-target="blazer" data-color="#000000" style="background:#000"></div>
+<div class="color" data-target="blazer" data-color="#355c4b" style="background:#355c4b"></div>
+<div class="color" data-target="blazer" data-color="#8b4513" style="background:#8b4513"></div>
+<div class="color" data-target="blazer" data-color="#6b6b6b" style="background:#6b6b6b"></div>
 </div>
 </div>
 
-<div class="group">
-<h2>Shirt Color</h2>
-<div class="colors shirtColors">
-<div class="color" data-type="shirt" data-color="#ffffff" style="background:#ffffff"></div>
-<div class="color" data-type="shirt" data-color="#87ceeb" style="background:#87ceeb"></div>
-<div class="color" data-type="shirt" data-color="#f5deb3" style="background:#f5deb3"></div>
-<div class="color" data-type="shirt" data-color="#ffb6c1" style="background:#ffb6c1"></div>
+<div class="section">
+<h2>Shirt Colour</h2>
+<div class="colors">
+<div class="color" data-target="shirt" data-color="#ffffff" style="background:#fff"></div>
+<div class="color" data-target="shirt" data-color="#87ceeb" style="background:#87ceeb"></div>
+<div class="color" data-target="shirt" data-color="#ffc0cb" style="background:#ffc0cb"></div>
+<div class="color" data-target="shirt" data-color="#f5deb3" style="background:#f5deb3"></div>
 </div>
 </div>
 
-<div class="group">
-<h2>Button Color</h2>
-<select id="buttonColor">
-<option value="#d4af37">Gold</option>
-<option value="#c0c0c0">Silver</option>
-<option value="#000000">Black</option>
-<option value="#ffffff">White</option>
-</select>
+<div class="section">
+<h2>Pant Colour</h2>
+<div class="colors">
+<div class="color" data-target="pants" data-color="#2b2b2b" style="background:#2b2b2b"></div>
+<div class="color" data-target="pants" data-color="#1f2a44" style="background:#1f2a44"></div>
+<div class="color" data-target="pants" data-color="#5f5f5f" style="background:#5f5f5f"></div>
+</div>
 </div>
 
-<div class="group">
-<h2>Button Size</h2>
-<input type="range" min="5" max="20" value="10" id="buttonSize"/>
-</div>
-
-<div class="group">
-<h2>Pant Length</h2>
-<select id="pantLength">
-<option value="full">Full Length</option>
-<option value="ankle">Ankle Cut</option>
-<option value="short">Short</option>
-</select>
-</div>
-
-<div class="group">
+<div class="section">
 <h2>Blazer Collar</h2>
-<select id="blazerCollar">
-<option value="notch">Notch</option>
+<select id="lapelStyle">
+<option value="classic">Classic</option>
 <option value="peak">Peak</option>
 <option value="shawl">Shawl</option>
 </select>
 </div>
 
-<div class="group">
+<div class="section">
 <h2>Shirt Collar</h2>
 <select id="shirtCollar">
 <option value="spread">Spread</option>
-<option value="buttondown">Button Down</option>
+<option value="wide">Wide</option>
 <option value="mandarin">Mandarin</option>
 </select>
 </div>
 
-<div class="group">
+<div class="section">
+<h2>Button Colour</h2>
+<select id="buttonColor">
+<option value="gold">Gold</option>
+<option value="silver">Silver</option>
+<option value="black">Black</option>
+<option value="white">White</option>
+</select>
+</div>
+
+<div class="section">
+<h2>Button Size</h2>
+<input type="range" id="buttonSize" min="10" max="22" value="13">
+</div>
+
+<div class="section">
+<h2>Pant Length</h2>
+<select id="pantLength">
+<option value="full">Full</option>
+<option value="ankle">Ankle</option>
+<option value="short">Short</option>
+</select>
+</div>
+
+<div class="section">
 <h2>Cuff Style</h2>
 <select id="cuffStyle">
 <option value="standard">Standard</option>
@@ -179,16 +518,16 @@ button{
 </select>
 </div>
 
-<div class="group">
+<div class="section">
 <h2>Shoulder Style</h2>
 <select id="shoulderStyle">
+<option value="normal">Normal</option>
 <option value="structured">Structured</option>
-<option value="natural">Natural</option>
-<option value="roped">Roped</option>
+<option value="soft">Soft</option>
 </select>
 </div>
 
-<div class="group">
+<div class="section">
 <h2>Elbow Pads</h2>
 <select id="elbowPads">
 <option value="none">None</option>
@@ -197,215 +536,191 @@ button{
 </select>
 </div>
 
-<div class="group">
+<div class="section">
 <h2>Blazer Pockets</h2>
 <select id="blazerPocket">
-<option value="flap">Flap</option>
+<option value="standard">Standard</option>
+<option value="slanted">Slanted</option>
 <option value="patch">Patch</option>
-<option value="welt">Welt</option>
 </select>
 </div>
 
-<div class="group">
-<h2>Pant Pockets</h2>
-<select id="pantPocket">
-<option value="slant">Slant</option>
-<option value="straight">Straight</option>
-<option value="none">None</option>
-</select>
-</div>
-
-<div class="group">
+<div class="section">
 <h2>Pocket Square</h2>
-<select id="pocketSquare">
-<option value="none">None</option>
+<select id="pocketSquareSelect">
 <option value="red">Red</option>
 <option value="blue">Blue</option>
 <option value="white">White</option>
+<option value="none">None</option>
 </select>
 </div>
 
-<div class="group">
-<h2>Embroidery Logo</h2>
-<input type="text" id="logoText" placeholder="Enter initials"/>
+<div class="section">
+<h2>Embroidery</h2>
+<input type="text" id="embroideryInput" placeholder="SV">
 </div>
 
-<button id="saveDesign">Save Design</button>
+<div class="section">
+<h2>Embroidery Font</h2>
+<select id="embroideryFont">
+<option value="Inter">Modern</option>
+<option value="Cinzel">Luxury</option>
+<option value="'Great Vibes'">Signature</option>
+</select>
+</div>
+
+<button>SAVE DESIGN</button>
 
 </div>
 
-<div id="viewer"></div>
+<div id="viewer">
+
+<div class="priceTag">₹24,999</div>
+
+<div id="avatar">
+
+<div class="shadow"></div>
+
+<div class="head"></div>
+<div class="hair"></div>
+<div class="neck"></div>
+
+<div class="armLeft">
+<div class="elbowLeft"></div>
+<div class="cuffLeft"></div>
+</div>
+
+<div class="armRight">
+<div class="elbowRight"></div>
+<div class="cuffRight"></div>
+</div>
+
+<div class="handLeft"></div>
+<div class="handRight"></div>
+
+<div class="shirt">
+<div class="shirtCollarLeft"></div>
+<div class="shirtCollarRight"></div>
+</div>
+
+<div class="tie"></div>
+
+<div class="blazer">
+
+<div class="lapelLeft"></div>
+<div class="lapelRight"></div>
+
+<div class="buttons">
+<div class="btn"></div>
+<div class="btn"></div>
+<div class="btn"></div>
+<div class="btn"></div>
+</div>
+
+<div class="pocketSquare"></div>
+
+<div class="embroidery">SV</div>
+
+<div class="blazerPocketLeft"></div>
+<div class="blazerPocketRight"></div>
 
 </div>
 
-<script type="module">
+<div class="pants">
 
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160/examples/jsm/controls/OrbitControls.js';
+<div class="legLeft">
+<div class="shoeLeft"></div>
+</div>
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x111111);
+<div class="legRight">
+<div class="shoeRight"></div>
+</div>
 
-const camera = new THREE.PerspectiveCamera(
-45,
-(window.innerWidth-360)/window.innerHeight,
-0.1,
-1000
-);
+</div>
 
-camera.position.set(0,1.5,6);
+</div>
 
-const renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(window.innerWidth-360, window.innerHeight);
-document.getElementById("viewer").appendChild(renderer.domElement);
+</div>
 
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
+</div>
 
-const light = new THREE.DirectionalLight(0xffffff, 2);
-light.position.set(3,5,5);
-scene.add(light);
+<script>
 
-scene.add(new THREE.AmbientLight(0xffffff,1));
+const avatar = document.getElementById('avatar');
 
-const bodyGroup = new THREE.Group();
-scene.add(bodyGroup);
+let rotateX = -4;
+let rotateY = 15;
 
-const skinMaterial = new THREE.MeshStandardMaterial({color:0xf2c9a0});
+let dragging = false;
 
-const head = new THREE.Mesh(
-new THREE.SphereGeometry(0.55,32,32),
-skinMaterial
-);
+avatar.style.transform =
+`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-head.position.y = 3;
-bodyGroup.add(head);
+avatar.addEventListener('mousedown',()=>{
 
-const shirtMaterial = new THREE.MeshStandardMaterial({color:0xffffff});
-const blazerMaterial = new THREE.MeshStandardMaterial({color:0x1f2a44});
-const pantMaterial = new THREE.MeshStandardMaterial({color:0x222222});
+dragging = true;
 
-const torso = new THREE.Mesh(
-new THREE.BoxGeometry(1.5,2.2,0.9),
-shirtMaterial
-);
+});
 
-torso.position.y = 1.3;
-bodyGroup.add(torso);
+window.addEventListener('mouseup',()=>{
 
-const blazer = new THREE.Mesh(
-new THREE.BoxGeometry(1.8,2.4,1),
-blazerMaterial
-);
+dragging = false;
 
-blazer.position.y = 1.3;
-bodyGroup.add(blazer);
+});
 
-const leftArm = new THREE.Mesh(
-new THREE.BoxGeometry(0.45,2,0.45),
-blazerMaterial
-);
+window.addEventListener('mousemove',(e)=>{
 
-leftArm.position.set(-1.2,1.3,0);
-bodyGroup.add(leftArm);
+if(!dragging) return;
 
-const rightArm = leftArm.clone();
-rightArm.position.x = 1.2;
-bodyGroup.add(rightArm);
+rotateY += e.movementX * 0.5;
+rotateX -= e.movementY * 0.2;
 
-const leftLeg = new THREE.Mesh(
-new THREE.BoxGeometry(0.6,2,0.6),
-pantMaterial
-);
+avatar.style.transform =
+`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-leftLeg.position.set(-0.4,-1,0);
-bodyGroup.add(leftLeg);
+});
 
-const rightLeg = leftLeg.clone();
-rightLeg.position.x = 0.4;
-bodyGroup.add(rightLeg);
+const blazer = document.querySelector('.blazer');
+const shirt = document.querySelector('.shirt');
+const leftArm = document.querySelector('.armLeft');
+const rightArm = document.querySelector('.armRight');
 
-const buttons = [];
+const leftLeg = document.querySelector('.legLeft');
+const rightLeg = document.querySelector('.legRight');
 
-for(let i=0;i<4;i++){
+document.querySelectorAll('.color').forEach(color=>{
 
-const btn = new THREE.Mesh(
-new THREE.SphereGeometry(0.06,32,32),
-new THREE.MeshStandardMaterial({color:0xd4af37})
-);
+color.addEventListener('click',()=>{
 
-btn.position.set(0,1.8 - i*0.4,0.52);
+const target = color.dataset.target;
+const value = color.dataset.color;
 
-buttons.push(btn);
-bodyGroup.add(btn);
+if(target==='blazer'){
+
+blazer.style.background =
+`linear-gradient(145deg,${value},#111)`;
+
+leftArm.style.background =
+`linear-gradient(145deg,${value},#111)`;
+
+rightArm.style.background =
+`linear-gradient(145deg,${value},#111)`;
 
 }
 
-const pocketSquare = new THREE.Mesh(
-new THREE.BoxGeometry(0.25,0.15,0.02),
-new THREE.MeshStandardMaterial({color:0xffffff})
-);
+if(target==='shirt'){
 
-pocketSquare.position.set(0.45,2,0.55);
-bodyGroup.add(pocketSquare);
-
-const logoCanvas = document.createElement('canvas');
-logoCanvas.width = 256;
-logoCanvas.height = 128;
-
-const ctx = logoCanvas.getContext('2d');
-ctx.fillStyle = 'white';
-ctx.font = '50px Arial';
-ctx.fillText('SV',50,70);
-
-const logoTexture = new THREE.CanvasTexture(logoCanvas);
-
-const logoPlane = new THREE.Mesh(
-new THREE.PlaneGeometry(0.5,0.25),
-new THREE.MeshBasicMaterial({
-map:logoTexture,
-transparent:true
-})
-);
-
-logoPlane.position.set(-0.45,2,0.55);
-bodyGroup.add(logoPlane);
-
-function updateLogo(text){
-
-ctx.clearRect(0,0,256,128);
-ctx.fillStyle='white';
-ctx.font='50px Arial';
-ctx.fillText(text,40,70);
-logoTexture.needsUpdate = true;
+shirt.style.background = value;
 
 }
 
-document.querySelectorAll(".color").forEach(btn=>{
+if(target==='pants'){
 
-btn.addEventListener("click",()=>{
+leftLeg.style.background =
+`linear-gradient(145deg,${value},#111)`;
 
-const type = btn.dataset.type;
-const color = btn.dataset.color;
-
-if(type==="blazer"){
-
-blazer.material.color.set(color);
-leftArm.material.color.set(color);
-rightArm.material.color.set(color);
-
-}
-
-if(type==="pants"){
-
-leftLeg.material.color.set(color);
-rightLeg.material.color.set(color);
-
-}
-
-if(type==="shirt"){
-
-torso.material.color.set(color);
+rightLeg.style.background =
+`linear-gradient(145deg,${value},#111)`;
 
 }
 
@@ -413,149 +728,131 @@ torso.material.color.set(color);
 
 });
 
-document.getElementById("buttonColor").addEventListener("change",(e)=>{
+document.getElementById('buttonColor').addEventListener('change',(e)=>{
 
-buttons.forEach(btn=>{
-btn.material.color.set(e.target.value);
-});
+document.querySelectorAll('.btn').forEach(btn=>{
 
-});
-
-document.getElementById("buttonSize").addEventListener("input",(e)=>{
-
-buttons.forEach(btn=>{
-
-btn.scale.setScalar(e.target.value/10);
+btn.style.background = e.target.value;
 
 });
 
 });
 
-document.getElementById("pantLength").addEventListener("change",(e)=>{
+document.getElementById('buttonSize').addEventListener('input',(e)=>{
 
-if(e.target.value==="ankle"){
+document.querySelectorAll('.btn').forEach(btn=>{
 
-leftLeg.scale.y = 0.8;
-rightLeg.scale.y = 0.8;
+btn.style.width = e.target.value + 'px';
+btn.style.height = e.target.value + 'px';
+
+});
+
+});
+
+document.getElementById('pantLength').addEventListener('change',(e)=>{
+
+if(e.target.value==='ankle'){
+
+leftLeg.style.height='250px';
+rightLeg.style.height='250px';
 
 }
 
-else if(e.target.value==="short"){
+else if(e.target.value==='short'){
 
-leftLeg.scale.y = 0.6;
-rightLeg.scale.y = 0.6;
+leftLeg.style.height='210px';
+rightLeg.style.height='210px';
 
 }
 
 else{
 
-leftLeg.scale.y = 1;
-rightLeg.scale.y = 1;
+leftLeg.style.height='300px';
+rightLeg.style.height='300px';
 
 }
 
 });
 
-document.getElementById("shoulderStyle").addEventListener("change",(e)=>{
+document.getElementById('elbowPads').addEventListener('change',(e)=>{
 
-if(e.target.value==="roped"){
+const pads = document.querySelectorAll('.elbowLeft,.elbowRight');
 
-leftArm.position.y = 1.5;
-rightArm.position.y = 1.5;
+pads.forEach(pad=>{
+
+if(e.target.value==='none'){
+
+pad.style.opacity='0';
+
+}else{
+
+pad.style.opacity='1';
+pad.style.background=e.target.value;
 
 }
 
-else if(e.target.value==="natural"){
+});
 
-leftArm.position.y = 1.1;
-rightArm.position.y = 1.1;
+});
+
+document.getElementById('pocketSquareSelect').addEventListener('change',(e)=>{
+
+const square = document.querySelector('.pocketSquare');
+
+if(e.target.value==='none'){
+
+square.style.display='none';
+
+}else{
+
+square.style.display='block';
+square.style.background=e.target.value;
+
+}
+
+});
+
+document.getElementById('embroideryInput').addEventListener('input',(e)=>{
+
+document.querySelector('.embroidery').innerText =
+e.target.value;
+
+});
+
+document.getElementById('embroideryFont').addEventListener('change',(e)=>{
+
+document.querySelector('.embroidery').style.fontFamily =
+e.target.value;
+
+});
+
+document.getElementById('lapelStyle').addEventListener('change',(e)=>{
+
+const left = document.querySelector('.lapelLeft');
+const right = document.querySelector('.lapelRight');
+
+if(e.target.value==='peak'){
+
+left.style.clipPath='polygon(0 0,100% 0,100% 100%)';
+right.style.clipPath='polygon(0 0,100% 0,0 100%)';
+
+}
+
+else if(e.target.value==='shawl'){
+
+left.style.borderRadius='40px';
+right.style.borderRadius='40px';
 
 }
 
 else{
 
-leftArm.position.y = 1.3;
-rightArm.position.y = 1.3;
+left.style.clipPath='polygon(0 0,100% 0,0 100%)';
+right.style.clipPath='polygon(100% 0,100% 100%,0 0)';
+left.style.borderRadius='0';
+right.style.borderRadius='0';
 
 }
-
-});
-
-document.getElementById("elbowPads").addEventListener("change",(e)=>{
-
-if(e.target.value==="none") return;
-
-const padColor = e.target.value==="brown" ? 0x8b4513 : 0x000000;
-
-const padGeo = new THREE.SphereGeometry(0.15,32,32);
-const padMat = new THREE.MeshStandardMaterial({color:padColor});
-
-const leftPad = new THREE.Mesh(padGeo,padMat);
-leftPad.position.set(-1.2,0.8,0.3);
-
-const rightPad = new THREE.Mesh(padGeo,padMat);
-rightPad.position.set(1.2,0.8,0.3);
-
-bodyGroup.add(leftPad);
-bodyGroup.add(rightPad);
-
-});
-
-document.getElementById("pocketSquare").addEventListener("change",(e)=>{
-
-if(e.target.value==="none"){
-
-pocketSquare.visible = false;
-return;
-
-}
-
-pocketSquare.visible = true;
-
-const colors = {
-red:"#ff0000",
-blue:"#0000ff",
-white:"#ffffff"
-};
-
-pocketSquare.material.color.set(colors[e.target.value]);
-
-});
-
-document.getElementById("logoText").addEventListener("input",(e)=>{
-
-updateLogo(e.target.value);
-
-});
-
-document.getElementById("saveDesign").addEventListener("click",()=>{
-
-const screenshot = renderer.domElement.toDataURL("image/png");
-
-localStorage.setItem("customSuitScreenshot", screenshot);
-
-alert("Design Saved");
-
-});
-
-function animate(){
-
-requestAnimationFrame(animate);
-
-controls.update();
-
-renderer.render(scene,camera);
-
-}
-
-animate();
-
-window.addEventListener("resize",()=>{
-
-camera.aspect = (window.innerWidth-360)/window.innerHeight;
-camera.updateProjectionMatrix();
-
-renderer.setSize(window.innerWidth-360, window.innerHeight);
 
 });
 
