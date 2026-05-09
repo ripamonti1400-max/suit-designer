@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Suit Designer</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="app">
+
+    <div class="sidebar">
+
+      <h1>Suit Designer</h1>
+
+      <div class="section">
+        <h2>Suit Color</h2>
+
+        <div class="colors">
+          <button class="color navy" data-color="#1f2a44"></button>
+          <button class="color black" data-color="#1a1a1a"></button>
+          <button class="color gray" data-color="#6d6d6d"></button>
+          <button class="color beige" data-color="#b79f7a"></button>
+          <button class="color green" data-color="#355c4b"></button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Collar Style</h2>
+
+        <select id="collarSelect">
+          <option value="notch">Notch Lapel</option>
+          <option value="peak">Peak Lapel</option>
+          <option value="shawl">Shawl Lapel</option>
+        </select>
+      </div>
+
+      <div class="section">
+        <h2>Buttons</h2>
+
+        <select id="buttonSelect">
+          <option value="1">1 Button</option>
+          <option value="2">2 Buttons</option>
+          <option value="3">3 Buttons</option>
+        </select>
+      </div>
+
+      <div class="section">
+        <h2>Fit</h2>
+
+        <select id="fitSelect">
+          <option value="slim">Slim Fit</option>
+          <option value="regular">Regular Fit</option>
+          <option value="oversized">Oversized</option>
+        </select>
+      </div>
+
+      <div class="section">
+        <h2>Sleeves</h2>
+
+        <select id="sleeveSelect">
+          <option value="normal">Normal</option>
+          <option value="short">Short</option>
+          <option value="long">Long</option>
+        </select>
+      </div>
+
+      <button id="saveBtn">Save Design</button>
+
+    </div>
+
+    <div class="viewer">
+
+      <div class="avatar">
+
+        <div class="head"></div>
+
+        <div class="suit" id="suit">
+
+          <div class="lapel left" id="leftLapel"></div>
+          <div class="lapel right" id="rightLapel"></div>
+
+          <div class="buttons" id="buttons"></div>
+
+          <div class="arm left-arm" id="leftArm"></div>
+          <div class="arm right-arm" id="rightArm"></div>
+
+        </div>
+
+        <div class="legs"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
